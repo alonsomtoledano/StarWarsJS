@@ -1,9 +1,8 @@
-import { fetchDataPeople, fetchDataPlanets } from './fetchdata';
+import { fetchDataPeople } from './fetchdata';
 import { GraphQLServer } from 'graphql-yoga'
 
 
-const urlBase = 'https://swapi.co/api/';
-const urlPeople = `${urlBase}people/`;
+const urlPeople = `https://swapi.co/api/people/`;
 
 
 const runApp = (dataPeople, dataPlanets) => {
@@ -40,8 +39,7 @@ const runApp = (dataPeople, dataPlanets) => {
       },
     }
   }
-  console.log("dataPeople" + dataPeople);
-  console.log("dataPlanets" + dataPlanets);
+
   const server = new GraphQLServer({typeDefs, resolvers})
   server.start();
 };
@@ -49,5 +47,3 @@ const runApp = (dataPeople, dataPlanets) => {
 
 // main program
 fetchDataPeople(runApp, urlPeople);
-
-export { runApp };

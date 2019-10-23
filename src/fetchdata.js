@@ -1,14 +1,15 @@
 import request from 'request';
 import fs from 'fs';
 
+const urlPlanets = `https://swapi.co/api/planets/`;
+
 
 const fetchDataPeople = (callback, url, dataPeople) => {
   if (!dataPeople) dataPeople = [];
 
   try{
     dataPeople = JSON.parse(fs.readFileSync("./people.json").toString());
-    fetchDataPlanets(callback, dataPeople, 'https://swapi.co/api/planets');
-    //callback(dataPeople);
+    fetchDataPlanets(callback, dataPeople, urlPlanets);
   }catch(e){
     console.log('fetching people data...');
     request({ url, json: true }, (error, response) => {
@@ -19,8 +20,7 @@ const fetchDataPeople = (callback, url, dataPeople) => {
         fetchDataPeople(callback, response.body.next, dataPeople);
       else{
         fs.writeFileSync("./people.json", JSON.stringify(dataPeople));
-        fetchDataPlanets(callback, dataPeople, 'https://swapi.co/api/planets');
-        //callback(dataPeople);
+        fetchDataPlanets(callback, dataPeople, urlPlanets);
       }
     });
   }
