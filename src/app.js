@@ -10,6 +10,7 @@ const runApp = (dataPeople, dataPlanets) => {
   const typeDefs = `
   type Query{
     character(name: String!): Character!
+    filter(hair_color: String!): [Character]!
   }
 
   type Character{
@@ -35,8 +36,26 @@ const runApp = (dataPeople, dataPlanets) => {
             planet: dataPlanets[0].name
           }
         }
+
         else return null;
       },
+      filter: (parent, args, ctx, info) => {
+        var arrayResults = dataPeople.slice();
+
+        if (args.hair_color){
+          arrayResults = arrayResults.filter(obj => obj.hair_color.includes(args.hair_color));
+          return arrayResults
+            .map(character => {
+              return{
+                name: character.name,
+                height: character.height,
+                hair_color: character.hair_color,
+                gender: character.gender,
+                planet: dataPlanets[0].name
+              }
+            })
+        }
+      }
     }
   }
 
