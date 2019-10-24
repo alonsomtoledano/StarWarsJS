@@ -1,4 +1,5 @@
-# Examen
+# 🐻✴️ StarWars
+![alt text](./StarWarsLogo.png)
 Se desear crear un API en GraphQL para servir información sobre StarWars. A continuación se describirán las queries y qué información deben ofrecer.
 ## Paso I
 Desarrollar un tipo de dato, llamado Character que incluya:
