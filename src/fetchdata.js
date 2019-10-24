@@ -1,7 +1,7 @@
 import request from 'request';
 import fs from 'fs';
 
-const urlPlanets = `https://swapi.co/api/planets/`;
+const urlFilms = `https://swapi.co/api/films/`;
 
 
 const fetchDataPeople = (callback, url, dataPeople) => {
@@ -9,7 +9,7 @@ const fetchDataPeople = (callback, url, dataPeople) => {
 
   try{
     dataPeople = JSON.parse(fs.readFileSync("./people.json").toString());
-    fetchDataPlanets(callback, dataPeople, urlPlanets);
+    fetchDataFilms(callback, dataPeople, urlFilms);
   }catch(e){
     console.log('fetching people data...');
     request({ url, json: true }, (error, response) => {
@@ -20,32 +20,32 @@ const fetchDataPeople = (callback, url, dataPeople) => {
         fetchDataPeople(callback, response.body.next, dataPeople);
       else{
         fs.writeFileSync("./people.json", JSON.stringify(dataPeople));
-        fetchDataPlanets(callback, dataPeople, urlPlanets);
+        fetchDataFilms(callback, dataPeople, urlFilms);
       }
     });
   }
 };
 
-const fetchDataPlanets = (callback, dataPeople, url, dataPlanets) => {
-  if (!dataPlanets) dataPlanets = [];
+const fetchDataFilms = (callback, dataPeople, url, dataFilms) => {
+  if (!dataFilms) dataFilms = [];
 
   try{
-    dataPlanets = JSON.parse(fs.readFileSync("./planets.json").toString());
-    callback(dataPeople, dataPlanets);
+    dataFilms = JSON.parse(fs.readFileSync("./films.json").toString());
+    callback(dataPeople, dataFilms);
   }catch(e){
-    console.log('fetching planet data...');
+    console.log('fetching films data...');
     request({ url, json: true }, (error, response) => {
       if (response.body) {
-        dataPlanets = [...dataPlanets, ...response.body.results];
+        dataFilms = [...dataFilms, ...response.body.results];
       }
       if (response.body.next !== null)
-        fetchDataPlanets(callback, dataPeople, response.body.next, dataPlanets);
+        fetchDataFilms(callback, dataPeople, response.body.next, dataFilms);
       else{
-        fs.writeFileSync("./planets.json", JSON.stringify(dataPlanets));
-        callback(dataPeople, dataPlanets);
+        fs.writeFileSync("./films.json", JSON.stringify(dataFilms));
+        callback(dataPeople, dataFilms);
       }
     });
   }
 };
 
-export { fetchDataPeople, fetchDataPlanets };
+export { fetchDataPeople, fetchDataFilms };

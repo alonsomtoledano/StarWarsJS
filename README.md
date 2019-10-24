@@ -4,34 +4,36 @@ Graphql query API for information about Star Wars.
 All information is provided by [Star Wars API](https://swapi.co/).
 ## 📝 Info
 The program, the first time it is started, makes a call to the API, generating locally the necessary files so as not to require further consultation.
+## Install
+```js
+npm install
+```
+## Run
+```js
+npm start
+```
 ## 🔍 Queries
-- 👨 Character
-    Introducing the name of a character, it shows basic information such as:
+- 👨 People
+    Introducing the name, gender of a character and some pagination settings, it filters and shows basic information such as with this characteristics:
     - Name
-    - Height
-    - Hair Color
     - Gender
-    - Planet
+    - Url
     #####
-- 👁️ Filter
-    Introducing a character's hair color, show all the characters with that characteristic.
+- 👁️ Character
+    Introducing a character's ID, it shows the character information with this ID.
 ## 🖥️ Example
 ### Input
 ```js
 query{
-  character(name: "Luke Skywalker"){
+  people(page: 1, number: 2, name: "L", gender: "male"){
     name
-    height
-    hair_color
     gender
-    planet
+    url
   }
-  filter(hair_color: "brown"){
+  character(id: 1){
     name
-    height
-    hair_color
     gender
-    planet
+    url
   }
 }
 ```
@@ -39,28 +41,23 @@ query{
 
 ```js
 "data": {
-    "character": {
-      "name": "Luke Skywalker",
-      "height": 172,
-      "hair_color": "blond",
-      "gender": "male",
-      "planet": "Alderaan"
-    },
-    "filter": [
+    "people": [
       {
-        "name": "Leia Organa",
-        "height": 150,
-        "hair_color": "brown",
-        "gender": "female",
-        "planet": "Alderaan"
+        "name": "Luke Skywalker",
+        "gender": "male",
+        "url": "https://swapi.co/api/people/1/"
       },
       {
         "name": "Owen Lars",
-        "height": 178,
-        "hair_color": "brown, grey",
         "gender": "male",
-        "planet": "Alderaan"
+        "url": "https://swapi.co/api/people/6/"
       }
-    ]
+    ],
+    "character": {
+      "name": "Luke Skywalker",
+      "gender": "male",
+      "url": "https://swapi.co/api/people/1/"
+    }
+  }
 }
 ```
