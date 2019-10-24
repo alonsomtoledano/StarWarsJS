@@ -1,19 +1,66 @@
-# 🐻✴️ StarWars
+# 🐻 ✴️ StarWars
 ![alt text](./StarWarsLogo.png)
-Se desear crear un API en GraphQL para servir información sobre StarWars. A continuación se describirán las queries y qué información deben ofrecer.
-## Paso I
-Desarrollar un tipo de dato, llamado Character que incluya:
-- name: Nombre del personaje.
-- height: Altura del personaje.
-- hair_color: Color de pelo.
-- gender: Genero del personaje.
-- specie: Especie del personaje.
-Desarrollar una query character que reciba como argumento el name y devuelva el Character correspondiente.
-## Paso II
-Completar la query characters con los siguientes argumentos:
-- height: Filtrar personajes que tengan altura menor que la indicada.
-- hair_color: Filtrar personajes con ese color de pelo.
-- planet: Fitro por nombre de planeta.
-## Paso III
-Desarrollar una query filmCharacter que reciba como argumento el name y devuelva un listado de todas las peliculas en las que ha participado el personaje.
-# Examen
+Graphql query API for information about Star Wars.
+All information is provided by [Star Wars API](https://swapi.co/).
+## 📝 Info
+The program, the first time it is started, makes a call to the API, generating locally the necessary files so as not to require further consultation.
+## 🔍 Queries
+- 👨 Character
+    Introducing the name of a character, it shows basic information such as:
+    - Name
+    - Height
+    - Hair Color
+    - Gender
+    - Planet
+    #####
+- 👁️ Filter
+    Introducing a character's hair color, show all the characters with that characteristic.
+## 🖥️ Example
+### Input
+```js
+query{
+  character(name: "Luke Skywalker"){
+    name
+    height
+    hair_color
+    gender
+    planet
+  }
+  filter(hair_color: "brown"){
+    name
+    height
+    hair_color
+    gender
+    planet
+  }
+}
+```
+### Output
+
+```js
+"data": {
+    "character": {
+      "name": "Luke Skywalker",
+      "height": 172,
+      "hair_color": "blond",
+      "gender": "male",
+      "planet": "Alderaan"
+    },
+    "filter": [
+      {
+        "name": "Leia Organa",
+        "height": 150,
+        "hair_color": "brown",
+        "gender": "female",
+        "planet": "Alderaan"
+      },
+      {
+        "name": "Owen Lars",
+        "height": 178,
+        "hair_color": "brown, grey",
+        "gender": "male",
+        "planet": "Alderaan"
+      }
+    ]
+}
+```
